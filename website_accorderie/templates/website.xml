@@ -2,6 +2,9 @@
 <!-- License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl). -->
 <odoo>
     <template id="accorderie_offre_service_unit_liste_offre_et_demande_service" name="Offre Service">
+        <script src=
+"https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js">
+    </script>
         <t name="About us" t-name="website.aboutus">
             <t t-call="website.layout">
                 <div id="wrap">
@@ -1162,13 +1165,20 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                            <p ng-if="form.date_service.$valid">La date est requise/invalide!</p>
                                             <div
                                                 class="btn btn-primary adapt-text-primary-color px-4 py-2"
                                                 style="align-self:start;"
                                                 ng-if="form_is_modifying_date_service"
                                                 ng-click="toggleFormIsModifyingDateService()"
                                             >Enregistrer</div>
+
+
+
+
                                         </div>
+
+
 
                                         <div ng-if="form_is_service_and_service_prevu(state)">
                                             <h4>Heure de début du service<a

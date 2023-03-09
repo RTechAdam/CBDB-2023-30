@@ -27,6 +27,7 @@ class AccorderieController(http.Controller):
             }
         return membre_id
 
+
     @http.route(
         [
             "/accorderie/get_personal_chat_information",
