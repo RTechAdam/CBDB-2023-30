@@ -1141,31 +1141,49 @@
                                             <span
                                                 ng-if="!form_is_modifying_date_service &amp;&amp; form_is_service_to_modify(state)"
                                             >{{form_date_service}}</span>
-                                            <div
-                                                class="input-group date"
-                                                data-target-input="nearest"
-                                                t-attf-id="date_service_datepicker"
-                                                ng-if="form_is_modifying_date_service || !form_is_service_to_modify(state)"
-                                            >
-                                                <input
-                                                    class="form-control datetimepicker-input o_website_form_input o_website_form_date"
-                                                    name="date"
-                                                    t-att-value="default_date"
-                                                    t-attf-data-target="#date_service_datepicker"
-                                                    type="text"
-                                                    ng-model="form.date_service"
-                                                />
-                                                <div
-                                                    class="input-group-append"
-                                                    t-attf-data-target="#date_service_datepicker"
-                                                    data-toggle="datetimepicker"
-                                                >
-                                                    <div class="input-group-text">
-                                                        <i class="fa fa-calendar" />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <p ng-if="form.date_service.$valid">La date est requise/invalide!</p>
+
+<div ng-app="myApp" ng-controller="myController">
+  <div class="input-group date" data-target-input="nearest" id="date_service_datepicker">
+    <input class="form-control datetimepicker-input o_website_form_input o_website_form_date"
+           name="date"
+           type="text"
+           ng-model="form.date_service"
+           ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 500, 'blur': 0 } }"
+           ng-required="true"
+           ng-pattern="/^\d{4}-\d{2}-\d{2}$/"
+    />
+    <div class="input-group-append"
+         data-target="#date_service_datepicker"
+         data-toggle="datetimepicker">
+      <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+    </div>
+  </div>
+  <p ng-show="dateInvalid">La date est requise/invalide!</p>
+
+<script>
+  var app = angular.module('myApp', []);
+  app.controller('myController', function($scope) {
+    $scope.dateInvalid = false;
+    $scope.validateDate = function() {
+      if ($scope.form.date_service) {
+        var date = moment($scope.form.date_service, 'YYYY-MM-DD', true);
+        if (date.isValid()) {
+          $scope.dateInvalid = false;
+            console.log("Date is invalid")
+        } else {
+          $scope.dateInvalid = true;
+            console.log("Date is valid")
+        }
+      } else {
+        $scope.dateInvalid = true;
+      }
+    };
+  });
+</script>
+</div>
+
+
+
                                             <div
                                                 class="btn btn-primary adapt-text-primary-color px-4 py-2"
                                                 style="align-self:start;"
